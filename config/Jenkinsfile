@@ -14,10 +14,12 @@ pipeline {
                 }
             }
         }
-        stage('Python version'){
-            steps{
-                script{
-                    sh "python --version"
+
+        stage('Verificar Versión de Python') {
+            steps {
+                script {
+                    def pythonVersion = sh(script: "${env.PYTHON}/bin/python --version", returnStdout: true).trim()
+                    echo "Python Version: ${pythonVersion}"
                 }
             }
         }
