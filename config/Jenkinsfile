@@ -9,9 +9,8 @@ pipeline {
         stage('Preparar Entorno') {
             steps {
                 script {
-                    sh "${PYTHON} --version" // Verifica la versión de Python
-                    sh "${PYTHON} -m pip install --upgrade pip" // Actualiza pip
-                    sh "${PYTHON} -m pip install -r requirements.txt" // Instala dependencias
+                    bat "${PYTHON} --version" // Verifica la versión de Python
+                    bat "${PYTHON} -m pip install --upgrade pip" // Actualiza pip
                 }
             }
         }
@@ -19,7 +18,7 @@ pipeline {
         stage('Ejecutar Script de Python') {
             steps {
                 script {
-                    sh "${PYTHON} enviar_correo.py" // Ejecuta el script de Python
+                    bat "${PYTHON} enviar_correo.py" // Ejecuta el script de Python
                 }
             }
         }
