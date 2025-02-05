@@ -1,6 +1,6 @@
 import smtplib
 from email.message import EmailMessage
-
+print("Holaaaaaaaaa")
 remitente = "jgarcia77214@universidadean.edu.co"
 destinatario = "jgarcia77214@universidadean.edu.co"
 mensaje = "Hola mundo "
