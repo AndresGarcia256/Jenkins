@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     // Asegúrate de tener Python y las dependencias necesarias instaladas
-                    sh 'pip install --upgrade pip'
+                    sh 'python --version'
                 }
             }
         }
