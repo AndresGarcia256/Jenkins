@@ -1,33 +1,25 @@
 pipeline {
     agent any
+
     environment {
-        PYTHON = tool name: 'Python3', type: 'com.cloudbees.jenkins.plugins.python.PythonInstallation'
+        PYTHON = 'python3' // Asegúrate de que Python está instalado y accesible en Jenkins
     }
 
     stages {
         stage('Preparar Entorno') {
             steps {
                 script {
-                    // Instala dependencias necesarias
-                    sh "${env.PYTHON}/bin/pip install --upgrade pip"
-                }
-            }
-        }
-    stages {
-        stage('Preparar Entorno2') {
-            steps {
-                script {
-                    // Asegúrate de tener Python y las dependencias necesarias instaladas
-                    sh 'python --version'
+                    sh "${PYTHON} --version" // Verifica la versión de Python
+                    sh "${PYTHON} -m pip install --upgrade pip" // Actualiza pip
+                    sh "${PYTHON} -m pip install -r requirements.txt" // Instala dependencias
                 }
             }
         }
 
-        stage('Enviar Correo') {
+        stage('Ejecutar Script de Python') {
             steps {
                 script {
-                    // Ejecuta el script de Python
-                    sh 'python enviar_correo.py'
+                    sh "${PYTHON} enviar_correo.py" // Ejecuta el script de Python
                 }
             }
         }
@@ -35,16 +27,18 @@ pipeline {
 
     post {
         success {
+            echo "Pipeline ejecutado con éxito. ✅"
             emailext (
                 subject: "Pipeline Exitoso: ${env.JOB_NAME}",
-                body: "El pipeline ha sido ejecutado con éxito.",
+                body: "El pipeline ha sido ejecutado con éxito en ${env.BUILD_URL}.",
                 recipientProviders: [[$class: 'DevelopersRecipientProvider']]
             )
         }
         failure {
+            echo "El pipeline ha fallado. ❌"
             emailext (
                 subject: "Pipeline Fallido: ${env.JOB_NAME}",
-                body: "El pipeline ha fallado. Revisa los logs para más detalles.",
+                body: "El pipeline ha fallado. Revisa los logs en ${env.BUILD_URL} para más detalles.",
                 recipientProviders: [[$class: 'DevelopersRecipientProvider']]
             )
         }
