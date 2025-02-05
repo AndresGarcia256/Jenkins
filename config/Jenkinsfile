@@ -24,21 +24,4 @@ pipeline {
             }
         }
     }
-
-    post {
-        success {
-            emailext (
-                subject: "Pipeline Exitoso: ${env.JOB_NAME}",
-                body: "El pipeline ha sido ejecutado con éxito.",
-                recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-            )
-        }
-        failure {
-            emailext (
-                subject: "Pipeline Fallido: ${env.JOB_NAME}",
-                body: "El pipeline ha fallado. Revisa los logs para más detalles.",
-                recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-            )
-        }
-    }
 }
