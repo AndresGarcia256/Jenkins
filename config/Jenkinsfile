@@ -4,15 +4,6 @@ pipeline {
     }
 
     stages {
-        stage('Preparar Entorno') {
-            steps {
-                script {
-                    // Asegúrate de tener Python y las dependencias necesarias instaladas
-                    sh 'pip install --upgrade pip'
-                }
-            }
-        }
-
         stage('Enviar Correo') {
             steps {
                 script {
