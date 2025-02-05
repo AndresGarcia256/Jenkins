@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        PYTHON = 'python3' // Asegúrate de que Python está instalado y accesible en Jenkins
+        PYTHON = 'C:\Users\jaide\AppData\Local\Microsoft\WindowsApps\python3.exe' // Asegúrate de que Python está instalado y accesible en Jenkins
     }
 
     stages {
