@@ -1,16 +1,11 @@
 pipeline {
     agent any
-
-    environment {
-        PYTHON = 'C:\\Users\\jaide\\AppData\\Local\\Microsoft\\WindowsApps\\python3.12.exe'
-    }
-
     stages {
         stage('Preparar Entorno') {
             steps {
                 script {
-                    bat "${PYTHON} --version" // Verifica la versión de Python
-                    bat "${PYTHON} -m pip install --upgrade pip" // Actualiza pip
+                    bat "python --version" // Verifica la versión de Python
+                    bat "python -m pip install --upgrade pip" // Actualiza pip
                 }
             }
         }
@@ -18,7 +13,7 @@ pipeline {
         stage('Ejecutar Script de Python') {
             steps {
                 script {
-                    bat "${PYTHON} enviar_correo.py" // Ejecuta el script de Python
+                    bat "python enviar_correo.py" // Ejecuta el script de Python
                 }
             }
         }
