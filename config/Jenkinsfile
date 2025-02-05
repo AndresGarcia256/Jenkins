@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        label 'jenkins-aks-python'
+    }
 
     stages {
         stage('Preparar Entorno') {
