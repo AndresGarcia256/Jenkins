@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Preparar Entorno') {
+            steps {
+                script {
+                    // Asegúrate de tener Python y las dependencias necesarias instaladas
+                    sh 'pip install --upgrade pip'
+                }
+            }
+        }
+
+        stage('Enviar Correo') {
+            steps {
+                script {
+                    // Ejecuta el script de Python
+                    sh 'python enviar_correo.py'
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            emailext (
+                subject: "Pipeline Exitoso: ${env.JOB_NAME}",
+                body: "El pipeline ha sido ejecutado con éxito.",
+                recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+            )
+        }
+        failure {
+            emailext (
+                subject: "Pipeline Fallido: ${env.JOB_NAME}",
+                body: "El pipeline ha fallado. Revisa los logs para más detalles.",
+                recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+            )
+        }
+    }
+}
