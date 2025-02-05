@@ -1,8 +1,20 @@
 pipeline {
     agent any
+    environment {
+        PYTHON = tool name: 'Python3', type: 'com.cloudbees.jenkins.plugins.python.PythonInstallation'
+    }
 
     stages {
         stage('Preparar Entorno') {
+            steps {
+                script {
+                    // Instala dependencias necesarias
+                    sh "${env.PYTHON}/bin/pip install --upgrade pip"
+                }
+            }
+        }
+    stages {
+        stage('Preparar Entorno2') {
             steps {
                 script {
                     // Asegúrate de tener Python y las dependencias necesarias instaladas
