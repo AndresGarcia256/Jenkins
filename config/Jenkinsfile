@@ -1,12 +1,16 @@
 pipeline {
     agent any
 
+    environment {
+        PYTHON = tool name: 'Python3', type: 'com.cloudbees.jenkins.plugins.python.PythonInstallation'
+    }
+
     stages {
         stage('Preparar Entorno') {
             steps {
                 script {
-                    // Asegúrate de tener Python y las dependencias necesarias instaladas
-                    sh 'python --version'
+                    // Instala dependencias necesarias
+                    sh "${env.PYTHON}/bin/pip install --upgrade pip"
                 }
             }
         }
@@ -15,7 +19,7 @@ pipeline {
             steps {
                 script {
                     // Ejecuta el script de Python
-                    sh 'python enviar_correo.py'
+                    sh "${env.PYTHON}/bin/python enviar_correo.py"
                 }
             }
         }
