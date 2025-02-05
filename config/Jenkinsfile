@@ -1,25 +1,12 @@
 pipeline {
     agent any
 
-    environment {
-        PYTHON = tool name: 'Python3', type: 'com.cloudbees.jenkins.plugins.python.PythonInstallation'
-    }
-
     stages {
         stage('Preparar Entorno') {
             steps {
                 script {
-                    // Instala dependencias necesarias
-                    sh "${env.PYTHON}/bin/pip install --upgrade pip"
-                }
-            }
-        }
-
-        stage('Verificar Versión de Python') {
-            steps {
-                script {
-                    def pythonVersion = sh(script: "${env.PYTHON}/bin/python --version", returnStdout: true).trim()
-                    echo "Python Version: ${pythonVersion}"
+                    // Asegúrate de tener Python y las dependencias necesarias instaladas
+                    sh 'python --version'
                 }
             }
         }
@@ -28,9 +15,26 @@ pipeline {
             steps {
                 script {
                     // Ejecuta el script de Python
-                    sh "${env.PYTHON}/bin/python enviar_correo.py"
+                    sh 'python enviar_correo.py'
                 }
             }
+        }
+    }
+
+    post {
+        success {
+            emailext (
+                subject: "Pipeline Exitoso: ${env.JOB_NAME}",
+                body: "El pipeline ha sido ejecutado con éxito.",
+                recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+            )
+        }
+        failure {
+            emailext (
+                subject: "Pipeline Fallido: ${env.JOB_NAME}",
+                body: "El pipeline ha fallado. Revisa los logs para más detalles.",
+                recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+            )
         }
     }
 }
