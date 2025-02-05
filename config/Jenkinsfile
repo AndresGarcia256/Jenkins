@@ -4,8 +4,8 @@ pipeline {
         stage('Preparar Entorno') {
             steps {
                 script {
-                    bat "C:\\Users\\jaide\\AppData\\Local\\Programs\\Python\\Python313 --version" // Verifica la versión de Python
-                    bat "C:\\Users\\jaide\\AppData\\Local\\Programs\\Python\\Python313 -m pip install --upgrade pip" // Actualiza pip
+                    bat "C:\\Users\\jaide\\AppData\\Local\\Programs\\Python\\Python313.exe --version" // Verifica la versión de Python
+                    bat "C:\\Users\\jaide\\AppData\\Local\\Programs\\Python\\Python313.exe -m pip install --upgrade pip" // Actualiza pip
                 }
             }
         }
@@ -13,7 +13,7 @@ pipeline {
         stage('Ejecutar Script de Python') {
             steps {
                 script {
-                    bat "C:\\Users\\jaide\\AppData\\Local\\Programs\\Python\\Python313 enviar_correo.py" // Ejecuta el script de Python
+                    bat "C:\\Users\\jaide\\AppData\\Local\\Programs\\Python\\Python313.exe enviar_correo.py" // Ejecuta el script de Python
                 }
             }
         }
